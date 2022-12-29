@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
 namespace LoggingKata.Test
@@ -31,13 +32,36 @@ namespace LoggingKata.Test
 
             //Arrange
 
+            TacoParser tacoParser = new TacoParser();
             //Act
 
+            var actual = tacoParser.Parse(line);
+
+
             //Assert
+
+            Assert.Equal(expected, actual.Location.Longitude);
         }
 
 
         //TODO: Create a test ShouldParseLatitude
+        [Theory]
+        [InlineData("34.073638, -84.677017, Taco Bell Acwort...", 34.073638)]
+        public void ParseLatitude(string line, double expected)
+        {
+            TacoParser tacoParser = new TacoParser();
+
+            //Act
+
+            var actual = tacoParser.Parse(line);
+
+
+            //Assert
+
+            Assert.Equal(expected, actual.Location.Latitude);
+
+
+        }
 
     }
 }
